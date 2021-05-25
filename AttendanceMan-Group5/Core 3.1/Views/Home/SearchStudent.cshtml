@@ -1,0 +1,97 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+@model IEnumerable<Core_3._1.Models.Student>
+
+@*<section id="featured-services" class="featured-services">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row">
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                            <h4 class="title"><a href="/Home/ViewStudent">Danh sach Mon Hoc</a></h4>
+                            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                        </div>
+                    </div>
+
+
+
+            </div>
+
+        </div>
+    </section*@<!-- End Featured Services Section -->
+@{ List<AttendanceEntry> list = ViewBag.Attendance;
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name Student</th>
+            <th scope="col">Score</th>
+            <th scope="col">Num Of Absent</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.IdStudent</th>
+                <td>@item.NameStudent</td>
+                <td>@item.Score</td>
+                <td>@list.Where(x => x.IdStudent == item.IdStudent).Count(y => y.CheckAttendance == false)</td>
+                <td><a href="/Home/UpdateStudent/@item.IdStudent">Edit</a></td>
+                <td><a id="submit" href="/Home/DeleteStudent/@item.IdStudent">Delete</a></td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+}
+@*<script>
+        $(document).ready(function () {
+            $("#submit").click(function (e) {
+                var NameStudent = document.getElementById("NameStudent").value;
+                var IdStudent = document.getElementById("IdStudent").value;
+                var Score = document.getElementById("Score").value;
+                var IdPhysicalClass = document.getElementById("IdPhysicalClass").value;
+                var IdAttendanceEntry = document.getElementById("IdAttendanceEntry").value;
+
+                $.ajax({
+                    url: "/Home/ActionUpdateStudent",
+                    type: "POST",
+                    data: {
+                        "IdStudent": IdStudent,
+                        "NameStudent": NameStudent,
+                        "Score": Score,
+                        "IdPhysicalClass": IdPhysicalClass,
+                        "IdAttendanceEntry": IdAttendanceEntry,
+
+                    },
+                });
+            });
+        });
+    </script>
+
+<@*script>
+    $(document).ready(function () {
+        $("#submit").click(function (e) {
+            var textSearch = document.getElementById("textSearch").value;
+            
+            
+
+            $.ajax({
+                url: "/Home/ActionSearchStudent",
+                type: "GET",
+                data: {
+                    "textSearch": textSearch
+                    
+
+                },
+            });
+        });
+    });
+</script>*@
+

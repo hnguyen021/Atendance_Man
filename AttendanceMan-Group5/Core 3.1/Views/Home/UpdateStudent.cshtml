@@ -1,0 +1,159 @@
+﻿@model Core_3._1.Models.Student
+  @{ var message = Html.Raw(ViewBag.SuccessMsg); }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="container">
+
+    <form class="well form-horizontal" action=" " method="post" id="contact_form">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend><center><h2><b>Update Student Form</b></h2></center></legend><br>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">First Name</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="IdStudent" name="IdStudent" placeholder=" IdStudent" class="form-control" type="text" value="@Model.IdStudent">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">First Name</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="NameStudent" name="name" placeholder=" Name" class="form-control" type="text" value="@Model.NameStudent">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Score</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="Score" placeholder="Score" class="form-control" type="text" value="@Model.Score">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Subjects</label>
+                <div class="col-md-4 selectContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <select id="IdPhysicalClass" class="form-control selectpicker">
+
+                            <option value="1">Toan </option>
+                            <option value="2">Hoa</option>
+                            <option value="3">Anh</option>
+                            <option>Tresurer's Office</option>
+                            <option>MPDC</option>
+                            <option>MCTC</option>
+                            <option>MCR</option>
+                            <option>Mayor's Office</option>
+                            <option>Tourism Office</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Attendance Id</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="IdAttendanceEntry" placeholder="Username" class="form-control" type="text" value="@Model.IdAttendanceEntry">
+                    </div>
+                </div>
+            </div>
+
+            <button id="submit" type="button" class="btn btn-success" style="margin-top: 2%;">Update Student</button>
+
+
+
+        </fieldset>
+    </form>
+
+</div><!-- /.container -->
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function (e) {
+              var NameStudent = document.getElementById("NameStudent").value;
+              var IdStudent = document.getElementById("IdStudent").value;
+              var Score = document.getElementById("Score").value;
+              var IdPhysicalClass = document.getElementById("IdPhysicalClass").value;
+              var IdAttendanceEntry = document.getElementById("IdAttendanceEntry").value;
+
+            $.ajax({
+              url: "/Home/ActionUpdateStudent",
+                type: "POST",
+                data: {
+                      "IdStudent": IdStudent,
+                    "NameStudent": NameStudent,
+                    "Score": Score,
+                    "IdPhysicalClass": IdPhysicalClass,
+                    "IdAttendanceEntry": IdAttendanceEntry,
+                    success: function (result) {
+                       
+                        window.location.href = '/Home/Index';
+                    }
+
+                },
+            });
+          });
+      });
+</script>
+
+
+@{
+    if (TempData["messages"] != null)
+    {
+        <script type="text/javascript">
+            // alert(TempData["messages"]);
+            window.onload = function () {
+                notifyMessage(TempData["messages"]);
+            };
+        </script>
+    }
+}
+<script type="text/javascript">
+    var message = '@message';
+    if(message){
+        //alert(message);
+       // $.notify(message, { position: 'top center', className: 'success', gap: 10 });
+        window.onload = function () {
+            notifyMessage(message);
+        };
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

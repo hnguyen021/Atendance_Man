@@ -1,0 +1,102 @@
+﻿
+@model Core_3._1.ViewModel.AttendanceCheckViewModel
+
+@{
+    //Student student = Model.Students.FirstOrDefault();
+    List<Student> studentL = Model.Students.ToList();
+    // var tem = studentL.FirstOrDefault().IdPhysicalClass;
+    //List<AttendanceEntry> attendanceEntryL = Model.AttendanceEntry.Where(x => x.IdPhysicalClass ==);
+
+
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Stt</th>
+            <th scope="col">Ten h</th>
+            <th scope="col">Diem so</th>
+            <th scope="col">DateCheck</th>
+
+        </tr>
+    </thead>
+    @foreach (var st in studentL)
+    {
+        
+        AttendanceEntry temp = Model.AttendanceEntry.Where(x => x.IdStudent == st.IdStudent).LastOrDefault();
+        //List<AttendanceEntry> a = Model.AttendanceEntry.GroupBy(x => x.IdStudent).Select(y => y.First());
+        //temp= temp.GroupBy(x => x.Id).Select(y => y.First());
+        // temp.CheckAttendance.ToString();
+        <tbody>
+            <tr>
+
+                <th class="idstudent" scope="row">@st.IdStudent</th>
+                <td><p id="NameStudent">@st.NameStudent</p></td>
+                <td><input class="score" type="text" value="@st.Score" /></td>
+                <td>@temp.DateCheck</td>
+
+                <td><p class="atCheck">@temp.CheckAttendance</p></td>
+
+                <td><button onclick="return addToCart('@temp.IdAttendanceEntry')" type="submit" class="btn btn-success" value="Điểm Danh" />Điểm Danh </td>
+
+
+
+
+            </tr>
+
+        </tbody>
+
+    }
+
+
+</table>
+<button id="submit" type="button" class="btn btn-success"><a href="/Home/AddAttendance/1">Lưu Thông Tin</a></button>
+
+<script>
+    // var CheckAt = document.getElementById("checkAt").innerHTML;
+    //if (CheckAt == "True") {
+    //    document.getElementById("checkAt").innerHTML = "P";
+    //}
+    //else {
+    //    document.getElementById("checkAt").innerHTML = "A";
+    //}
+</script>
+
+<script>
+    function addToCart(IdCheck) {
+
+        // var CheckAt = document.getElementById("checkAt").innerHTML = "True";
+        // var IdCheck = document.getElementById("submit").value;
+        // var NameStudent = document.getElementById("NameStudent").innerHTML;
+        // console.log("count cart: " + NameStudent);
+        // console.log("count cart: " + IdCheck);
+
+        $.ajax({
+            url: "/Home/UpdateAttendance",
+            type: "POST",
+            data: {
+
+                "IdCheck": IdCheck,
+
+            },
+            success: function (result) {
+                location.reload();
+                // console.log(result);
+                // count++;
+                // console.log("count cart: " + count);
+                if (document.getElementsByClassName("checkAt").innerHTML == "True") {
+                    document.getElementsByClassName("checkAt").innerHTML = "P";
+
+                } else {
+                    document.getElementsByClassName("checkAt").innerHTML = "A";
+                }
+                //document.getElementById("checkAt").innerHTML = count;
+            }
+        });
+
+    };
+</script>
